@@ -20,6 +20,7 @@ messages:
    add_trust: '<playername> has been trusted with comamnds.'
    remove_trust: '<playername> is now blocked from commands.'
    already_trust: '<playername> is already trusted with commands.'
+   already_untrust: '<playername> is was not found on the trust list.'
    player_not_found: 'Cannot find the player <playername>.'
    bad_sound_config: 'The sound option in config is not a valid sound string id.'
    not_a_command: '<cmd> is not a known command.'
