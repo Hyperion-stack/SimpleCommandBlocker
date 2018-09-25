@@ -76,7 +76,7 @@ We appreciate any contributions.
 - Please licensed submissions under GNU Lesser General Public License v3.
 
 ## Links
-**Spigot Resource Listing:** Coming Soon
+**Spigot Resource Listing:** [https://www.spigotmc.org/resources/simplecommandblocker.61114/](https://www.spigotmc.org/resources/simplecommandblocker.61114/)
 
 **Issues:** [https://github.com/johnelder/SimpleCommandBlocker/issues](https://github.com/johnelder/SimpleCommandBlocker/issues)
 
