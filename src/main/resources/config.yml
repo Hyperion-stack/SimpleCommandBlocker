@@ -1,5 +1,5 @@
 # SimpleCommandBlocker by Civalo
-# Spigot address:   Github: https://github.com/johnelder/SimpleTag
+# Spigot address:   Github: https://github.com/johnelder/SimpleCommandBlocker
 # License: GNU Lesser General Public License v3  
 debug: false
 blockCommands: true
