@@ -1,0 +1,24 @@
+name: SimpleCommandBlocker
+main: com.civservers.plugins.simplecommandblocker.SimpleCommandBlocker
+
+version: 0.0.1
+
+author: "Civalo"
+commands:
+   simplecommandblocker:
+      description: This is a demo command. (no requirements)
+      aliases: [scb]
+      usage: 
+permissions:
+   scb.bypass:
+      description: Allows the use to bypass the blocker.
+      default: op
+   simplecommandblocker.bypass:
+      description: Allows the use to bypass the blocker.
+      default: op
+   scb.admin:
+      description: Allows the use allow, block and reload commands.
+      default: op
+   simplecommandblocker.admin:
+      description: Allows the use allow, block and reload commands.
+      default: op  

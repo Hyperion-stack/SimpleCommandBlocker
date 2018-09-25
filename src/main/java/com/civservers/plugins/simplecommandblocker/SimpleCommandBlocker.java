@@ -48,7 +48,7 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
     	if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass")) {
 	    	if (config.getBoolean("blockCommands")) {
 	    		String cmd = "";
-		    	List<String> allowedCommands = config.getStringList("allowedCommands");
+		    	List<String> allowedCommands = config.getStringList("allowed_commands");
 		    	if (e.getMessage().indexOf(" ") >= 0) {
 		    		cmd = e.getMessage().substring(1, e.getMessage().indexOf(" "));
 		    	} else {
@@ -56,7 +56,7 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 		    	}
 		    	
 		    	if (!allowedCommands.contains(cmd)) {
-		    		Util.sendPlayer(player, ChatColor.RED + msgs.get("no_cmds").toString());
+		    		Util.sendPlayer(player, ChatColor.RED + msgs.get("no_cmds").toString().replaceAll("<cmd>", cmd));
 		    		if (config.getBoolean("play_sound"))
 			    		try {
 			    			player.playSound(player.getLocation(), Sound.valueOf(config.getString("sound").toString()), 2, 1);
