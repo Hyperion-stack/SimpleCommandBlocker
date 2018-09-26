@@ -3,8 +3,6 @@ package com.civservers.plugins.simplecommandblocker;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
@@ -16,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerCommandSendEvent;
-import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -100,25 +97,6 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 		   }
 	   }
    }
-//    @EventHandler
-//    public void onTab(TabCompleteEvent e) {
-// 	   if (e.getSender() instanceof Player) {
-// 		   Player player = (Player) e.getSender();
-//	 	   Util.debug(player.getDisplayName().toString() + " TabCompleteEvent");
-//	 	   if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass")) {
-//	 		   if (config.getBoolean("blockTabComplete")) {
-//	 			   List<String> allowedCommands = config.getStringList("allowed_commands");
-//	 			   e.getCompletions().forEach(cmd -> {
-//	 				  Util.debug("TabComplete:" + cmd.toString());
-//	 				   if (!allowedCommands.contains(cmd)) {
-//	 					   e.getCompletions().remove(cmd);
-//	 				   }
-//	 			   });
-//	 		   }
-//	 	   }
-// 	   }
-//    }
-   
 
     public boolean reload() {
 		reloadConfig();
