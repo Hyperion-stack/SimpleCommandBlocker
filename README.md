@@ -1,7 +1,7 @@
 # SimpleCommandBlocker
 **Description:** Easy to use command blocker.  This plugin can block ALL commands from any plugin.  Commands can be allowed by using commands in game or editing the config.yml manually.  Players can be given a permission node or trusted via the /scb trust command.
 
-**Latest Version:** 0.0.1
+**Latest Version:** 1.0.0
 
 **Tested On:** Spigot 1.13.1
 
