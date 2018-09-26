@@ -25,10 +25,11 @@
 
 ```
 # SimpleCommandBlocker by Civalo
-# Spigot address:   Github: https://github.com/johnelder/SimpleCommandBlocker
+# Spigot address: https://www.spigotmc.org/resources/simplecommandblocker.61114  Github: https://github.com/johnelder/SimpleCommandBlocker
 # License: GNU Lesser General Public License v3
 debug: false
 blockCommands: true
+blockTabComplete: true
 play_sound: true
 sound: ENTITY_GHAST_HURT
 allowed_commands:
@@ -47,13 +48,12 @@ messages:
    remove_trust: '<playername> is now blocked from commands.'
    already_trust: '<playername> is already trusted with commands.'
    already_untrust: '<playername> is was not found on the trust list.'
+   empty_list: 'There are no players on the trust list.'
    player_not_found: 'Cannot find the player <playername>.'
    bad_sound_config: 'The sound option in config is not a valid sound string id.'
    not_a_command: '<cmd> is not a known command.'
    help: |
-      All players are blocked from commands by default.
-      To allow, use trust command or permissions:
-      simplecommandblocker.bypass or scb.bypass
+      All players are blocked from commands by default. To allow, use trust command or permissions: simplecommandblocker.bypass or scb.bypass
       /scb allow <cmd> Allows all player to use a command.
       /scb block <cmd> Removes command from allowed commands list.
       /scb trust <player name> - Allows a specific player to use commands.

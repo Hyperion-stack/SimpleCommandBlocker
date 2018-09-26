@@ -27,9 +27,7 @@ messages:
    bad_sound_config: 'The sound option in config is not a valid sound string id.'
    not_a_command: '<cmd> is not a known command.'
    help: |
-      All players are blocked from commands by default.
-      To allow, use trust command or permissions:
-      simplecommandblocker.bypass or scb.bypass
+      All players are blocked from commands by default. To allow, use trust command or permissions: simplecommandblocker.bypass or scb.bypass
       /scb allow <cmd> Allows all player to use a command.
       /scb block <cmd> Removes command from allowed commands list.
       /scb trust <player name> - Allows a specific player to use commands.
