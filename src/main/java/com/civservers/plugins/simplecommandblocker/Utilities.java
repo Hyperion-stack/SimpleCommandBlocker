@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -20,16 +21,6 @@ public class Utilities {
 	public Utilities(SimpleCommandBlocker plugin) {
 		this.plugin = plugin;
 	}
-	
-//    public boolean isValidNumber(String value) {
-//        // Loop over characters and check if digits
-//        for (int i = 0; i < value.length(); i++) {
-//            if (!Character.isDigit(value.charAt(i))) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
     
     public String getOnlineUUID(String username) {
     	String out = "not found";
@@ -42,6 +33,18 @@ public class Utilities {
     	
     	return out;
     	
+    }
+    
+    public String getPreviousUUID(String username) {
+    	String out = "not found";
+    	OfflinePlayer[] prevPlayers = Bukkit.getOfflinePlayers();
+    	for (OfflinePlayer opl : prevPlayers) {
+    		if (opl.getName().equalsIgnoreCase(username)) {
+    			out = opl.getUniqueId().toString();
+    			break;
+    		}
+    	}
+    	return out;
     }
     
     public boolean configListAdd(String path, String value) {

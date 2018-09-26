@@ -1,5 +1,6 @@
 package com.civservers.plugins.simplecommandblocker;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -37,6 +38,9 @@ public class pluginCommandExecutor implements CommandExecutor {
     						Boolean tryAdd = Util.configListAdd("allowed_commands", args[1].toString());
     						if (tryAdd) {
     							Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("cmd_allowed").toString().replaceAll("<cmd>", args[1].toString()));
+    							Bukkit.getServer().getOnlinePlayers().forEach(uPlayer -> {
+    								uPlayer.updateCommands();
+    							});
     						} else {
     							Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("already_allowed").toString().replaceAll("<cmd>", args[1].toString()));
     						}
@@ -55,6 +59,9 @@ public class pluginCommandExecutor implements CommandExecutor {
 						Boolean tryRem = Util.configListRemove("allowed_commands", args[1].toString());
 						if (tryRem) {
 							Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("cmd_blocked").toString().replaceAll("<cmd>", args[1].toString()));
+							Bukkit.getServer().getOnlinePlayers().forEach(uPlayer -> {
+								uPlayer.updateCommands();
+							});
 						} else {
 							Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("already_blocked").toString().replaceAll("<cmd>", args[1].toString()));
 						}
@@ -70,6 +77,9 @@ public class pluginCommandExecutor implements CommandExecutor {
     			if (sender.hasPermission("simplecommandblocker.admin") || sender.hasPermission("scb.admin")) {
 	    			boolean rStatus = plugin.reload();
 	    			if (rStatus) {
+						Bukkit.getServer().getOnlinePlayers().forEach(uPlayer -> {
+							uPlayer.updateCommands();
+						});
 	    				Util.sendSender(sender,ChatColor.GREEN + " Reloaded!");
 	    			} else {
 	    				Util.sendSender(sender,ChatColor.RED + " Reload Failed!");
@@ -84,13 +94,16 @@ public class pluginCommandExecutor implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("trust")) {
 				if (sender.hasPermission("simplecommandblocker.admin") || sender.hasPermission("scb.admin")) {
 					if (args.length >= 2) {
-    					String t_uuid = Util.getOnlineUUID(args[1]);
+    					String t_uuid = Util.getPreviousUUID(args[1]);
     					if (t_uuid.equals("not found")) {
     						Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("player_not_found").toString().replaceAll("<playername>", args[1]));
     					} else {
 	    					Boolean addTrust = Util.configListAdd("trustlist", t_uuid);
 	    					if (addTrust) {
 	    						Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("add_trust").toString().replaceAll("<playername>", args[1]));
+    							Bukkit.getServer().getOnlinePlayers().forEach(uPlayer -> {
+    								uPlayer.updateCommands();
+    							});
 	    					} else {
 	    						Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("already_trust").toString().replaceAll("<playername>", args[1]));
 	    					}
@@ -107,13 +120,16 @@ public class pluginCommandExecutor implements CommandExecutor {
 			} else if (args[0].equalsIgnoreCase("untrust")) {
 				if (sender.hasPermission("simplecommandblocker.admin") || sender.hasPermission("scb.admin")) {
 					if (args.length >= 2) {
-    					String t_uuid = Util.getOnlineUUID(args[1]);
+    					String t_uuid = Util.getPreviousUUID(args[1]);
     					if (t_uuid.equals("not found")) {
     						Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("player_not_found").toString().replaceAll("<playername>", args[1]));
     					} else {
 	    					Boolean remTrust = Util.configListRemove("trustlist", t_uuid);
 	    					if (remTrust) {
 	    						Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("remove_trust").toString().replaceAll("<playername>", args[1]));
+    							Bukkit.getServer().getOnlinePlayers().forEach(uPlayer -> {
+    								uPlayer.updateCommands();
+    							});
 	    					} else {
 	    						Util.sendSender(sender, ChatColor.GREEN + plugin.msgs.get("already_untrust").toString().replaceAll("<playername>", args[1]));
 	    					}
@@ -128,8 +144,8 @@ public class pluginCommandExecutor implements CommandExecutor {
 				
 			} else if (args[0].equalsIgnoreCase("trustlist")) {
 				if (sender.hasPermission("simplecommandblocker.admin") || sender.hasPermission("scb.admin")) {
-					String[] trustList = plugin.config.getStringList("trustlist").toArray(new String[0]);
-    				if (trustList.length > 0) {
+					List<String> trustList = plugin.config.getStringList("trustlist");
+    				if (!trustList.isEmpty()) {
     					for (String t_uuid : trustList) {
     						Util.sendSender(sender, Bukkit.getOfflinePlayer(UUID.fromString(t_uuid)).getName().toString());
     					}

@@ -2,6 +2,9 @@ package com.civservers.plugins.simplecommandblocker;
 
 
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
@@ -12,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerCommandSendEvent;
+import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -45,7 +50,10 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {
     	Player player = e.getPlayer();
-    	if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass")) {
+    	String p_uuid = player.getUniqueId().toString();
+    	List<String> trustList = config.getStringList("trustlist");
+    	
+    	if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
 	    	if (config.getBoolean("blockCommands")) {
 	    		String cmd = "";
 		    	List<String> allowedCommands = config.getStringList("allowed_commands");
@@ -70,6 +78,46 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
     	}
     }
         
+   @EventHandler
+   public void onPlayerTab(PlayerCommandSendEvent e) {
+	   
+	   Player player = e.getPlayer();
+	   String p_uuid = player.getUniqueId().toString();
+	   List<String> trustList = config.getStringList("trustlist");
+	   Util.debug("Updating command list for " + player.getDisplayName().toString());
+	   if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
+		   if (config.getBoolean("blockTabComplete")) {
+			   List<String> allowedCommands = config.getStringList("allowed_commands");
+			   List<String> cmdList = new ArrayList<>();
+			   e.getCommands().forEach(cmd -> {
+				   if (!allowedCommands.contains(cmd.toString())) {
+					   cmdList.add(cmd);			   
+				   } else {
+					   Util.debug("Skipping cmd: " + cmd);
+				   }
+			   });
+			   e.getCommands().removeAll(cmdList);
+		   }
+	   }
+   }
+//    @EventHandler
+//    public void onTab(TabCompleteEvent e) {
+// 	   if (e.getSender() instanceof Player) {
+// 		   Player player = (Player) e.getSender();
+//	 	   Util.debug(player.getDisplayName().toString() + " TabCompleteEvent");
+//	 	   if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass")) {
+//	 		   if (config.getBoolean("blockTabComplete")) {
+//	 			   List<String> allowedCommands = config.getStringList("allowed_commands");
+//	 			   e.getCompletions().forEach(cmd -> {
+//	 				  Util.debug("TabComplete:" + cmd.toString());
+//	 				   if (!allowedCommands.contains(cmd)) {
+//	 					   e.getCompletions().remove(cmd);
+//	 				   }
+//	 			   });
+//	 		   }
+//	 	   }
+// 	   }
+//    }
    
 
     public boolean reload() {
