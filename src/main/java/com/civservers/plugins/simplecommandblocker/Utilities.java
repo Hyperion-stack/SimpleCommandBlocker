@@ -81,6 +81,8 @@ public class Utilities {
     	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + plugin.msgs.get("prefix").toString() + " " + msg);
     }
     
+    
+    
     public void debug(String dString) {
     	if (plugin.config.getBoolean("debug")) {
     		Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + plugin.msgs.get("prefix").toString() + " [DEBUG] " + dString);

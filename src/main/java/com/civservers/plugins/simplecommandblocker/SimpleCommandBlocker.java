@@ -2,102 +2,63 @@ package com.civservers.plugins.simplecommandblocker;
 
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
+
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
+import net.md_5.bungee.api.ChatColor;
 
 
 public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 
 	public String pluginName = "SimpleCommandBlocker";
+	public String mcVer = Bukkit.getVersion();
 	public FileConfiguration config = getConfig();
 	public Map<String, Object> msgs = config.getConfigurationSection("messages").getValues(true);
-	Utilities Util = new Utilities(this);
+	Utilities ut = new Utilities(this);
 	
 	
 	@Override
     public void onEnable() {
-		
 		config.options().copyDefaults(true);
 	    saveConfig();
+	    reload();
 	    
-		this.getCommand("simplecommandblocker").setExecutor(new pluginCommandExecutor(this));
 		
-		Bukkit.getPluginManager().registerEvents(this, this);
-		reload();
+		Boolean keepLoading = true;
+		if (mcVer.contains("MC: 1.13")) {
+			ut.debug("Loading files for version 1.13.1");
+			Bukkit.getServer().getPluginManager().registerEvents(new Listeners1131(this), this);
+		} else if (mcVer.contains("MC: 1.12")) {
+			ut.debug("Loading files for version 1.12.2");
+			Bukkit.getServer().getPluginManager().registerEvents(new Listeners188(this), this);
+		} else if (mcVer.contains("MC: 1.8")) {
+			ut.debug("Loading files for version 1.8.8");
+			Bukkit.getServer().getPluginManager().registerEvents(new Listeners188(this), this);
+		} else {
+			ut.debug("No matching version found.");
+			ut.sendConsole(ChatColor.RED + "DISABLED: Server version not supported.");
+			keepLoading = false;
+		}
+		
+		if (keepLoading) {
+		    
+			this.getCommand("simplecommandblocker").setExecutor(new pluginCommandExecutor(this));
+			
+		} else {
+			Bukkit.getPluginManager().disablePlugin(this);
+		}
     }
     
     @Override
     public void onDisable() {
 
     }
-    
-    @EventHandler
-    public void onCommand(PlayerCommandPreprocessEvent e) {
-    	Player player = e.getPlayer();
-    	String p_uuid = player.getUniqueId().toString();
-    	List<String> trustList = config.getStringList("trustlist");
-    	
-    	if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
-	    	if (config.getBoolean("blockCommands")) {
-	    		String cmd = "";
-		    	List<String> allowedCommands = config.getStringList("allowed_commands");
-		    	if (e.getMessage().indexOf(" ") >= 0) {
-		    		cmd = e.getMessage().substring(1, e.getMessage().indexOf(" "));
-		    	} else {
-		    		cmd = e.getMessage().substring(1, e.getMessage().length());
-		    	}
-		    	
-		    	if (!allowedCommands.contains(cmd)) {
-		    		Util.sendPlayer(player, ChatColor.RED + msgs.get("no_cmds").toString().replaceAll("<cmd>", cmd));
-		    		if (config.getBoolean("play_sound"))
-			    		try {
-			    			player.playSound(player.getLocation(), Sound.valueOf(config.getString("sound").toString()), 2, 1);
-			    		}
-			    		catch (Exception err) {
-			    			Util.sendConsole(ChatColor.RED + msgs.get("bad_sound_config").toString());
-			    		}
-		    		e.setCancelled(true);
-		    	}
-	    	}
-    	}
-    }
-        
-   @EventHandler
-   public void onPlayerTab(PlayerCommandSendEvent e) {
-	   
-	   Player player = e.getPlayer();
-	   String p_uuid = player.getUniqueId().toString();
-	   List<String> trustList = config.getStringList("trustlist");
-	   Util.debug("Updating command list for " + player.getDisplayName().toString());
-	   if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
-		   if (config.getBoolean("blockTabComplete")) {
-			   List<String> allowedCommands = config.getStringList("allowed_commands");
-			   List<String> cmdList = new ArrayList<>();
-			   e.getCommands().forEach(cmd -> {
-				   if (!allowedCommands.contains(cmd.toString())) {
-					   cmdList.add(cmd);			   
-				   } else {
-					   Util.debug("Skipping cmd: " + cmd);
-				   }
-			   });
-			   e.getCommands().removeAll(cmdList);
-		   }
-	   }
-   }
-
+   
     public boolean reload() {
 		reloadConfig();
 		config = getConfig();

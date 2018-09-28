@@ -1,3 +1,5 @@
 com\civservers\plugins\simplecommandblocker\Utilities.class
 com\civservers\plugins\simplecommandblocker\SimpleCommandBlocker.class
+com\civservers\plugins\simplecommandblocker\Listeners188.class
+com\civservers\plugins\simplecommandblocker\Listeners1131.class
 com\civservers\plugins\simplecommandblocker\pluginCommandExecutor.class

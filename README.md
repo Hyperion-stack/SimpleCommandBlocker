@@ -1,9 +1,9 @@
 # SimpleCommandBlocker
 **Description:** Easy to use command blocker.  This plugin can block ALL commands from any plugin.  Commands can be allowed by using commands in game or editing the config.yml manually.  Players can be given a permission node or trusted via the /scb trust command.
 
-**Latest Version:** 1.0.0
+**Latest Version:** 1.1.0
 
-**Tested On:** Spigot 1.13.1
+**Tested On:** Spigot 1.13.1, Spigot 1.8.8, Spigot 1.12.2
 
 ## Commands
 
@@ -25,8 +25,10 @@
 
 ```
 # SimpleCommandBlocker by Civalo
-# Spigot address: https://www.spigotmc.org/resources/simplecommandblocker.61114  Github: https://github.com/johnelder/SimpleCommandBlocker
+# Spigot address:   Github: https://github.com/johnelder/SimpleCommandBlocker
 # License: GNU Lesser General Public License v3
+# SOUND WILL NOT PLAY UNLESS A VALID SOUND STRING ID IS LISTED IN THIS CONFIG.
+# SEE GITHUB PAGE FOR VALID SOUND OPTIONS
 debug: false
 blockCommands: true
 blockTabComplete: true
@@ -43,14 +45,14 @@ messages:
    already_allowed: 'The command <cmd> is already allowed.'
    already_blocked: 'The command <cmd> is already blocked.'
    no_cmds: 'You cannot use the <cmd> command at this time!'
-   no_perm: 'You do not have permissino to use that command!'
-   add_trust: '<playername> has been trusted with comamnds.'
+   no_perm: 'You do not have permission to use that command!'
+   add_trust: '<playername> has been trusted with commands.'
    remove_trust: '<playername> is now blocked from commands.'
    already_trust: '<playername> is already trusted with commands.'
-   already_untrust: '<playername> is was not found on the trust list.'
+   already_untrust: '<playername> was not found on the trust list.'
    empty_list: 'There are no players on the trust list.'
    player_not_found: 'Cannot find the player <playername>.'
-   bad_sound_config: 'The sound option in config is not a valid sound string id.'
+   bad_sound_config: 'The sound option in config.yml is not a valid sound string id.'
    not_a_command: '<cmd> is not a known command.'
    help: |
       All players are blocked from commands by default. To allow, use trust command or permissions: simplecommandblocker.bypass or scb.bypass
@@ -60,11 +62,18 @@ messages:
       /scb untrust <player name> - Removes a player from the trusted list.
       /scb trustlist - Displays a list of all players that you have trusted.
       /scb reload - Reloads the config.yml file.
-
-
+      
+      
 ```
 ## 1.13.1 Sound Options:
 Valid sound options can be found here: [https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
+
+## 1.12.2 Sound Options:
+Valid sound options can be found here: [https://techunlimitedgroup.com/javadocs/bukkit-1.12.2-R0.1-20180712.012114-155/org/bukkit/Sound.html](https://techunlimitedgroup.com/javadocs/bukkit-1.12.2-R0.1-20180712.012114-155/org/bukkit/Sound.html)
+
+## 1.8.8 Sound Options:
+Valid sound options can be found here: [https://techunlimitedgroup.com/javadocs/bukkit-1.8.8-R0.1-20160221.082532-43/org/bukkit/Sound.html](https://techunlimitedgroup.com/javadocs/bukkit-1.8.8-R0.1-20160221.082532-43/org/bukkit/Sound.html)
+
 
 ## Support
 
