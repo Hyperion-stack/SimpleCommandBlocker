@@ -21,21 +21,19 @@ public class Listeners188 implements Listener {
 		this.plugin = plugin;
 		ut = new Utilities(plugin);
 	}
-	
-	
-	
+
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {
     	Player player = e.getPlayer();
 
     	String p_uuid = player.getUniqueId().toString();
-    	List<String> trustList = plugin.config.getStringList("trustlist");
+    	List<String> trustList = plugin.getConfig().getStringList("trustlist");
     	
     	if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
-	    	if (plugin.config.getBoolean("blockCommands")) {
+	    	if (plugin.getConfig().getBoolean("blockCommands")) {
 	    		String cmd = "";
-		    	List<String> allowedCommands = plugin.config.getStringList("allowed_commands");
+		    	List<String> allowedCommands = plugin.getConfig().getStringList("allowed_commands");
 		    	if (e.getMessage().indexOf(" ") >= 0) {
 		    		cmd = e.getMessage().substring(1, e.getMessage().indexOf(" "));
 		    	} else {
@@ -43,13 +41,13 @@ public class Listeners188 implements Listener {
 		    	}
 		    	
 		    	if (!allowedCommands.contains(cmd)) {
-		    		ut.sendPlayer(player, ChatColor.RED + plugin.msgs.get("no_cmds").toString().replaceAll("<cmd>", cmd));
-		    		if (plugin.config.getBoolean("play_sound"))
+		    		ut.sendPlayer(player, ChatColor.RED + plugin.getMessages().get("no_cmds").toString().replaceAll("<cmd>", cmd));
+		    		if (plugin.getConfig().getBoolean("play_sound"))
 			    		try {
-			    			player.playSound(player.getLocation(), Sound.valueOf(plugin.config.getString("sound").toString()), 2, 1);
+			    			player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound").toString()), 2, 1);
 			    		}
 			    		catch (Exception err) {
-			    			ut.sendConsole(ChatColor.RED + plugin.msgs.get("bad_sound_config").toString());
+			    			ut.sendConsole(ChatColor.RED + plugin.getMessages().get("bad_sound_config").toString());
 			    		}
 		    		e.setCancelled(true);
 		    	}

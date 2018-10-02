@@ -15,15 +15,14 @@ import net.md_5.bungee.api.ChatColor;
 
 public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 
-	public String mcVer = Bukkit.getVersion();
-	public FileConfiguration config = getConfig();
-	public Map<String, Object> msgs = config.getConfigurationSection("messages").getValues(true);
-	Utilities ut = new Utilities(this);
+	private String mcVer = Bukkit.getVersion();
+    private Map<String, Object> msgs = getConfig().getConfigurationSection("messages").getValues(true);
+    private Utilities ut = new Utilities(this);
 	
 	
 	@Override
     public void onEnable() {
-		config.options().copyDefaults(true);
+		getConfig().options().copyDefaults(true);
 	    saveConfig();
 	    reload();
 	    
@@ -55,9 +54,16 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
    
     public boolean reload() {
 		reloadConfig();
-		config = getConfig();
-		msgs = config.getConfigurationSection("messages").getValues(true);
+		msgs = getConfig().getConfigurationSection("messages").getValues(true);
 		return true;     
+    }
+
+    public String getMinecraftVersion() {
+        return mcVer;
+    }
+
+    public Map<String, Object> getMessages() {
+        return msgs;
     }
 }
 

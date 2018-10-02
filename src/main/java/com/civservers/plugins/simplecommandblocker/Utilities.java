@@ -11,7 +11,8 @@ import org.bukkit.entity.Player;
 
 
 
-public class Utilities {	
+public class Utilities {
+
 	private SimpleCommandBlocker plugin;
 	
 	public Utilities(SimpleCommandBlocker plugin) {
@@ -45,10 +46,10 @@ public class Utilities {
     
     public boolean configListAdd(String path, String value) {
     	List<String> confList = new ArrayList<String>();
-    	confList = plugin.config.getStringList(path);
+    	confList = plugin.getConfig().getStringList(path);
     	if (!confList.contains(value)) {
     		confList.add(value);
-    		plugin.config.set(path, confList);
+    		plugin.getConfig().set(path, confList);
     		plugin.saveConfig();
     		return true;
     	} else {
@@ -58,10 +59,10 @@ public class Utilities {
     
     public boolean configListRemove(String path, String value) {
     	List<String> confList = new ArrayList<String>();
-    	confList = plugin.config.getStringList(path);
+    	confList = plugin.getConfig().getStringList(path);
     	if (confList.contains(value)) {
     		confList.remove(value);
-    		plugin.config.set(path, confList);
+    		plugin.getConfig().set(path, confList);
     		plugin.saveConfig();
     		return true;
     	} else {
@@ -70,22 +71,22 @@ public class Utilities {
     }
     
     public void sendPlayer(Player player, String msg) {
-    	player.sendMessage(ChatColor.YELLOW + plugin.msgs.get("prefix").toString() + " " + msg);
+    	player.sendMessage(ChatColor.YELLOW + plugin.getMessages().get("prefix").toString() + " " + msg);
     }
     
     public void sendSender(CommandSender s, String msg) {
-    	s.sendMessage(ChatColor.YELLOW + plugin.msgs.get("prefix").toString() + msg);
+    	s.sendMessage(ChatColor.YELLOW + plugin.getMessages().get("prefix").toString() + msg);
     }
         
     public void sendConsole(String msg) {
-    	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + plugin.msgs.get("prefix").toString() + " " + msg);
+    	Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + plugin.getMessages().get("prefix").toString() + " " + msg);
     }
     
     
     
     public void debug(String dString) {
-    	if (plugin.config.getBoolean("debug")) {
-    		Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + plugin.msgs.get("prefix").toString() + " [DEBUG] " + dString);
+    	if (plugin.getConfig().getBoolean("debug")) {
+    		Bukkit.getConsoleSender().sendMessage(ChatColor.LIGHT_PURPLE + plugin.getMessages().get("prefix").toString() + " [DEBUG] " + dString);
     	}
     }
 }
