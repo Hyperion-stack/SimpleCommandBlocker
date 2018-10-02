@@ -24,6 +24,7 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 		getConfig().options().copyDefaults(true);
 	    saveConfig();
 	    reload();
+	    Utilities.init(this);
 	    
 		
 		boolean keepLoading = true;
