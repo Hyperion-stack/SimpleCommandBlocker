@@ -52,11 +52,6 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
     }
-    
-    @Override
-    public void onDisable() {
-
-    }
    
     public boolean reload() {
 		reloadConfig();
