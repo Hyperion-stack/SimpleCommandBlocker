@@ -14,11 +14,11 @@ import org.bukkit.help.HelpMap;
 import org.bukkit.help.HelpTopic;
 
 
-public class pluginCommandExecutor implements CommandExecutor {
+public class PluginCommandExecutor implements CommandExecutor {
 
     private final SimpleCommandBlocker plugin;
 	
-	public pluginCommandExecutor(SimpleCommandBlocker plugin) {
+	public PluginCommandExecutor(SimpleCommandBlocker plugin) {
 		this.plugin = plugin;
 	}
 	

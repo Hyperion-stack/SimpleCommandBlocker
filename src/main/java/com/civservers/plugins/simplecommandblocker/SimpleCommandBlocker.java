@@ -6,7 +6,6 @@ package com.civservers.plugins.simplecommandblocker;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -45,7 +44,7 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 		
 		if (keepLoading) {
 		    
-			this.getCommand("simplecommandblocker").setExecutor(new pluginCommandExecutor(this));
+			this.getCommand("simplecommandblocker").setExecutor(new PluginCommandExecutor(this));
 			
 		} else {
 			Bukkit.getPluginManager().disablePlugin(this);
