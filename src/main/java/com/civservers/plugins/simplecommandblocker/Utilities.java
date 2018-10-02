@@ -45,7 +45,7 @@ public class Utilities {
     }
     
     public static boolean configListAdd(String path, String value) {
-    	List<String> confList = new ArrayList<String>();
+    	List<String> confList;
     	confList = plugin.getConfig().getStringList(path);
     	if (!confList.contains(value)) {
     		confList.add(value);
@@ -58,7 +58,7 @@ public class Utilities {
     }
     
     public static boolean configListRemove(String path, String value) {
-    	List<String> confList = new ArrayList<String>();
+    	List<String> confList;
     	confList = plugin.getConfig().getStringList(path);
     	if (confList.contains(value)) {
     		confList.remove(value);
