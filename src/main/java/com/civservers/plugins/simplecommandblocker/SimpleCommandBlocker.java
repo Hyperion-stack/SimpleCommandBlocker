@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.md_5.bungee.api.ChatColor;
 
 
-public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
+public final class SimpleCommandBlocker extends JavaPlugin {
 
 	private String mcVer = Bukkit.getVersion();
     private Map<String, Object> msgs = getConfig().getConfigurationSection("messages").getValues(true);
