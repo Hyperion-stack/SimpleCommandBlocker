@@ -28,7 +28,7 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 	    reload();
 	    
 		
-		Boolean keepLoading = true;
+		boolean keepLoading = true;
 		if (mcVer.contains("MC: 1.13")) {
 			ut.debug("Loading files for version 1.13.1");
 			Bukkit.getServer().getPluginManager().registerEvents(new Listeners1131(this), this);
