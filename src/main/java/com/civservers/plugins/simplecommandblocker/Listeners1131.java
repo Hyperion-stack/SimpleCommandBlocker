@@ -25,13 +25,13 @@ public class Listeners1131 implements Listener {
 	   Player player = e.getPlayer();
 	   String p_uuid = player.getUniqueId().toString();
 	   List<String> trustList = plugin.getConfig().getStringList("trustlist");
-	   Utilities.debug("Updating command list for " + player.getDisplayName().toString());
+	   Utilities.debug("Updating command list for " + player.getDisplayName());
 	   if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
 		   if (plugin.getConfig().getBoolean("blockTabComplete")) {
 			   List<String> allowedCommands = plugin.getConfig().getStringList("allowed_commands");
 			   List<String> cmdList = new ArrayList<>();
 			   e.getCommands().forEach(cmd -> {
-				   if (!allowedCommands.contains(cmd.toString())) {
+				   if (!allowedCommands.contains(cmd)) {
 					   cmdList.add(cmd);			   
 				   } else {
 					   Utilities.debug("Skipping cmd: " + cmd);
