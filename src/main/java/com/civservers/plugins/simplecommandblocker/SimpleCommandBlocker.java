@@ -15,7 +15,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 
-	public String pluginName = "SimpleCommandBlocker";
 	public String mcVer = Bukkit.getVersion();
 	public FileConfiguration config = getConfig();
 	public Map<String, Object> msgs = config.getConfigurationSection("messages").getValues(true);
