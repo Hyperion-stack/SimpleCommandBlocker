@@ -17,7 +17,6 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 
 	private String mcVer = Bukkit.getVersion();
     private Map<String, Object> msgs = getConfig().getConfigurationSection("messages").getValues(true);
-    private Utilities ut = new Utilities(this);
 	
 	
 	@Override
@@ -29,17 +28,17 @@ public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
 		
 		boolean keepLoading = true;
 		if (mcVer.contains("MC: 1.13")) {
-			ut.debug("Loading files for version 1.13.1");
+			Utilities.debug("Loading files for version 1.13.1");
 			Bukkit.getServer().getPluginManager().registerEvents(new Listeners1131(this), this);
 		} else if (mcVer.contains("MC: 1.12")) {
-			ut.debug("Loading files for version 1.12.2");
+			Utilities.debug("Loading files for version 1.12.2");
 			Bukkit.getServer().getPluginManager().registerEvents(new Listeners188(this), this);
 		} else if (mcVer.contains("MC: 1.8")) {
-			ut.debug("Loading files for version 1.8.8");
+			Utilities.debug("Loading files for version 1.8.8");
 			Bukkit.getServer().getPluginManager().registerEvents(new Listeners188(this), this);
 		} else {
-			ut.debug("No matching version found.");
-			ut.sendConsole(ChatColor.RED + "DISABLED: Server version not supported.");
+			Utilities.debug("No matching version found.");
+			Utilities.sendConsole(ChatColor.RED + "DISABLED: Server version not supported.");
 			keepLoading = false;
 		}
 		

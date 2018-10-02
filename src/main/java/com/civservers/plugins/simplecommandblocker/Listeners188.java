@@ -15,13 +15,10 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 public class Listeners188 implements Listener {
 	
 	private SimpleCommandBlocker plugin;
-	private Utilities ut;
 	
 	public Listeners188(SimpleCommandBlocker plugin) {
 		this.plugin = plugin;
-		ut = new Utilities(plugin);
 	}
-
 
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {
@@ -41,13 +38,13 @@ public class Listeners188 implements Listener {
 		    	}
 		    	
 		    	if (!allowedCommands.contains(cmd)) {
-		    		ut.sendPlayer(player, ChatColor.RED + plugin.getMessages().get("no_cmds").toString().replaceAll("<cmd>", cmd));
+		    		Utilities.sendPlayer(player, ChatColor.RED + plugin.getMessages().get("no_cmds").toString().replaceAll("<cmd>", cmd));
 		    		if (plugin.getConfig().getBoolean("play_sound"))
 			    		try {
 			    			player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound").toString()), 2, 1);
 			    		}
 			    		catch (Exception err) {
-			    			ut.sendConsole(ChatColor.RED + plugin.getMessages().get("bad_sound_config").toString());
+			    			Utilities.sendConsole(ChatColor.RED + plugin.getMessages().get("bad_sound_config").toString());
 			    		}
 		    		e.setCancelled(true);
 		    	}

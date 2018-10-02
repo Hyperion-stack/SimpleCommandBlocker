@@ -14,11 +14,9 @@ import org.bukkit.event.player.PlayerCommandSendEvent;
 public class Listeners1131 implements Listener {
 	
 	private SimpleCommandBlocker plugin;
-	private Utilities ut;
 	
 	public Listeners1131(SimpleCommandBlocker plugin) {
 		this.plugin = plugin;
-		ut = new Utilities(plugin);
 	}
 	
     
@@ -39,13 +37,13 @@ public class Listeners1131 implements Listener {
 		    	}
 		    	
 		    	if (!allowedCommands.contains(cmd)) {
-		    		ut.sendPlayer(player, ChatColor.RED + plugin.getMessages().get("no_cmds").toString().replaceAll("<cmd>", cmd));
+		    		Utilities.sendPlayer(player, ChatColor.RED + plugin.getMessages().get("no_cmds").toString().replaceAll("<cmd>", cmd));
 		    		if (plugin.getConfig().getBoolean("play_sound"))
 			    		try {
 			    			player.playSound(player.getLocation(), Sound.valueOf(plugin.getConfig().getString("sound").toString()), 2, 1);
 			    		}
 			    		catch (Exception err) {
-			    			ut.sendConsole(ChatColor.RED + plugin.getMessages().get("bad_sound_config").toString());
+			    			Utilities.sendConsole(ChatColor.RED + plugin.getMessages().get("bad_sound_config").toString());
 			    		}
 		    		e.setCancelled(true);
 		    	}
@@ -59,7 +57,7 @@ public class Listeners1131 implements Listener {
 	   Player player = e.getPlayer();
 	   String p_uuid = player.getUniqueId().toString();
 	   List<String> trustList = plugin.getConfig().getStringList("trustlist");
-	   ut.debug("Updating command list for " + player.getDisplayName().toString());
+	   Utilities.debug("Updating command list for " + player.getDisplayName().toString());
 	   if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
 		   if (plugin.getConfig().getBoolean("blockTabComplete")) {
 			   List<String> allowedCommands = plugin.getConfig().getStringList("allowed_commands");
@@ -68,7 +66,7 @@ public class Listeners1131 implements Listener {
 				   if (!allowedCommands.contains(cmd.toString())) {
 					   cmdList.add(cmd);			   
 				   } else {
-					   ut.debug("Skipping cmd: " + cmd);
+					   Utilities.debug("Skipping cmd: " + cmd);
 				   }
 			   });
 			   e.getCommands().removeAll(cmdList);
