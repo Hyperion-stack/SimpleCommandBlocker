@@ -6,64 +6,63 @@ package com.civservers.plugins.simplecommandblocker;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 
 
-public final class SimpleCommandBlocker extends JavaPlugin implements Listener {
+public final class SimpleCommandBlocker extends JavaPlugin {
 
-	public String pluginName = "SimpleCommandBlocker";
-	public String mcVer = Bukkit.getVersion();
-	public FileConfiguration config = getConfig();
-	public Map<String, Object> msgs = config.getConfigurationSection("messages").getValues(true);
-	Utilities ut = new Utilities(this);
+	private String mcVer = Bukkit.getVersion();
+    private Map<String, Object> msgs = getConfig().getConfigurationSection("messages").getValues(true);
 	
 	
 	@Override
     public void onEnable() {
-		config.options().copyDefaults(true);
+		getConfig().options().copyDefaults(true);
 	    saveConfig();
 	    reload();
+	    Utilities.init(this);
 	    
 		
-		Boolean keepLoading = true;
+		boolean keepLoading = true;
 		if (mcVer.contains("MC: 1.13")) {
-			ut.debug("Loading files for version 1.13.1");
+			Utilities.debug("Loading files for version 1.13.1");
 			Bukkit.getServer().getPluginManager().registerEvents(new Listeners1131(this), this);
+            Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		} else if (mcVer.contains("MC: 1.12")) {
-			ut.debug("Loading files for version 1.12.2");
-			Bukkit.getServer().getPluginManager().registerEvents(new Listeners188(this), this);
+			Utilities.debug("Loading files for version 1.12.2");
+			Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		} else if (mcVer.contains("MC: 1.8")) {
-			ut.debug("Loading files for version 1.8.8");
-			Bukkit.getServer().getPluginManager().registerEvents(new Listeners188(this), this);
+			Utilities.debug("Loading files for version 1.8.8");
+			Bukkit.getServer().getPluginManager().registerEvents(new Listeners(this), this);
 		} else {
-			ut.debug("No matching version found.");
-			ut.sendConsole(ChatColor.RED + "DISABLED: Server version not supported.");
+			Utilities.debug("No matching version found.");
+			Utilities.sendConsole(ChatColor.RED + "DISABLED: Server version not supported.");
 			keepLoading = false;
 		}
 		
 		if (keepLoading) {
 		    
-			this.getCommand("simplecommandblocker").setExecutor(new pluginCommandExecutor(this));
+			this.getCommand("simplecommandblocker").setExecutor(new PluginCommandExecutor(this));
 			
 		} else {
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
     }
-    
-    @Override
-    public void onDisable() {
-
-    }
    
     public boolean reload() {
 		reloadConfig();
-		config = getConfig();
-		msgs = config.getConfigurationSection("messages").getValues(true);
+		msgs = getConfig().getConfigurationSection("messages").getValues(true);
 		return true;     
+    }
+
+    public String getMinecraftVersion() {
+        return mcVer;
+    }
+
+    public Map<String, Object> getMessages() {
+        return msgs;
     }
 }
 
