@@ -29,15 +29,7 @@ public class Listeners1131 implements Listener {
 	   if (!player.isOp() && !player.hasPermission("scb.bypass") && !player.hasPermission("simplecommandblocker.bypass") && !trustList.contains(p_uuid)) {
 		   if (plugin.getConfig().getBoolean("blockTabComplete")) {
 			   List<String> allowedCommands = plugin.getConfig().getStringList("allowed_commands");
-			   List<String> cmdList = new ArrayList<>();
-			   e.getCommands().forEach(cmd -> {
-				   if (!allowedCommands.contains(cmd)) {
-					   cmdList.add(cmd);			   
-				   } else {
-					   Utilities.debug("Skipping cmd: " + cmd);
-				   }
-			   });
-			   e.getCommands().removeAll(cmdList);
+			   e.getCommands().retainAll(allowedCommands);
 		   }
 	   }
    }
